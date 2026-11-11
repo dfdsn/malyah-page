@@ -1,0 +1,60 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { projetos } from '../data/site';
+const categorias = [...new Set(projetos.map((p) => p.categoria))];
+---
+<Base title="Projetos" description="Projetos de integração fiscal, integração de sistemas e desenvolvimento sob medida.">
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Projetos</span>
+      <h1>Integrações que estão rodando em produção</h1>
+      <p>Uma amostra do que já entregamos. Alguns clientes são mantidos em sigilo por contrato.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="filters" role="group" aria-label="Filtrar projetos">
+        <button class="chip" aria-pressed="true" data-cat="*">Todos</button>
+        {categorias.map((c) => <button class="chip" aria-pressed="false" data-cat={c}>{c}</button>)}
+      </div>
+      <div class="grid grid-3" id="lista-projetos">
+        {projetos.map((p) => (
+          <article class="card project" data-cat={p.categoria}>
+            <span class="cat">{p.categoria}</span>
+            <h3>{p.titulo}</h3>
+            <p>{p.texto}</p>
+            <div class="tags">{p.tags.map((t) => <span class="tag">{t}</span>)}</div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="cta-band">
+        <div>
+          <h2>Seu projeto pode ser o próximo</h2>
+          <p>Conte o que precisa integrar e montamos uma proposta.</p>
+        </div>
+        <a class="btn" href="contato.html">Solicitar orçamento <Icon name="arrow" size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var chips = document.querySelectorAll('.chip');
+      var cards = document.querySelectorAll('#lista-projetos .project');
+      chips.forEach(function (c) {
+        c.addEventListener('click', function () {
+          chips.forEach(function (o) { o.setAttribute('aria-pressed', o === c ? 'true' : 'false'); });
+          var cat = c.dataset.cat;
+          cards.forEach(function (card) { card.hidden = cat !== '*' && card.dataset.cat !== cat; });
+        });
+      });
+    })();
+  </script>
+</Base>

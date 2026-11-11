@@ -1,0 +1,172 @@
+---
+import { slides } from '../data/site';
+import Icon from './Icon.astro';
+const SLIDE_MS = 6000;
+---
+<section class="hero" aria-roledescription="carrossel" aria-label="Destaques" style={`--slide-ms:${SLIDE_MS}ms`} data-ms={SLIDE_MS}>
+  <div class="slides">
+    {slides.map((s, i) => (
+      <div class={`slide${i === 0 ? ' active' : ''}`} data-tema={s.tema} role="group" aria-roledescription="slide" aria-label={`${i + 1} de ${slides.length}`} aria-hidden={i === 0 ? 'false' : 'true'}>
+        <div class="slide-bg"></div>
+        <div class="container slide-inner">
+          <div class="slide-copy">
+            <span class="eyebrow">{s.tag}</span>
+            {i === 0 ? <h1>{s.titulo}</h1> : <h2>{s.titulo}</h2>}
+            <p>{s.texto}</p>
+            <div class="slide-actions">
+              <a class="btn" href={s.cta.href} tabindex={i === 0 ? undefined : -1}>{s.cta.texto} <Icon name="arrow" size={18} /></a>
+              {s.cta.href === 'projetos.html'
+                ? <a class="btn btn-ghost" href="contato.html" tabindex={i === 0 ? undefined : -1}>Fale conosco</a>
+                : <a class="btn btn-ghost" href="projetos.html" tabindex={i === 0 ? undefined : -1}>Nossos projetos</a>}
+            </div>
+          </div>
+          <div class="slide-art" aria-hidden="true">
+            {s.tema === 'fiscal' && (
+              <svg viewBox="0 0 400 340" fill="none">
+                <rect x="70" y="20" width="220" height="290" rx="16" fill="#0f2a47" stroke="#2dd4bf" stroke-opacity=".5"/>
+                <rect x="96" y="50" width="110" height="12" rx="6" fill="#2dd4bf"/>
+                <rect x="96" y="76" width="168" height="8" rx="4" fill="#fff" fill-opacity=".2"/>
+                <rect x="96" y="94" width="140" height="8" rx="4" fill="#fff" fill-opacity=".2"/>
+                <text x="96" y="140" fill="#5eead4" font-family="JetBrains Mono, monospace" font-size="13">&lt;infNFe&gt;</text>
+                <text x="112" y="164" fill="#93c5fd" font-family="JetBrains Mono, monospace" font-size="13">&lt;emit&gt;…&lt;/emit&gt;</text>
+                <text x="112" y="188" fill="#93c5fd" font-family="JetBrains Mono, monospace" font-size="13">&lt;det&gt;…&lt;/det&gt;</text>
+                <text x="112" y="212" fill="#93c5fd" font-family="JetBrains Mono, monospace" font-size="13">&lt;total&gt;…&lt;/total&gt;</text>
+                <text x="96" y="236" fill="#5eead4" font-family="JetBrains Mono, monospace" font-size="13">&lt;/infNFe&gt;</text>
+                <circle cx="300" cy="250" r="52" fill="#14b8a6"/>
+                <path d="m278 250 15 15 30-30" stroke="#06101f" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="250" y="40" width="120" height="40" rx="20" fill="#06101f" stroke="#2dd4bf"/>
+                <text x="310" y="65" text-anchor="middle" fill="#2dd4bf" font-family="JetBrains Mono, monospace" font-size="13">100 · Autorizado</text>
+              </svg>
+            )}
+            {s.tema === 'integracao' && (
+              <svg viewBox="0 0 400 340" fill="none">
+                <g stroke="#60a5fa" stroke-opacity=".6" stroke-width="2" stroke-dasharray="6 6">
+                  <path d="M200 170 80 70M200 170 320 70M200 170 70 270M200 170 330 270M200 170 200 40"/>
+                </g>
+                <circle cx="200" cy="170" r="50" fill="#14b8a6"/>
+                <text x="200" y="176" text-anchor="middle" fill="#06101f" font-family="Inter, sans-serif" font-weight="800" font-size="18">API</text>
+                <g font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#fff" text-anchor="middle">
+                  <rect x="30" y="45" width="100" height="44" rx="12" fill="#13305c" stroke="#60a5fa"/><text x="80" y="72">ERP</text>
+                  <rect x="270" y="45" width="100" height="44" rx="12" fill="#13305c" stroke="#60a5fa"/><text x="320" y="72">E-commerce</text>
+                  <rect x="20" y="248" width="100" height="44" rx="12" fill="#13305c" stroke="#60a5fa"/><text x="70" y="275">Banco</text>
+                  <rect x="280" y="248" width="100" height="44" rx="12" fill="#13305c" stroke="#60a5fa"/><text x="330" y="275">Logística</text>
+                  <rect x="150" y="10" width="100" height="40" rx="12" fill="#13305c" stroke="#60a5fa"/><text x="200" y="35">SEFAZ</text>
+                </g>
+              </svg>
+            )}
+            {s.tema === 'dev' && (
+              <svg viewBox="0 0 400 340" fill="none">
+                <rect x="20" y="30" width="360" height="270" rx="16" fill="#0e1430" stroke="#a78bfa" stroke-opacity=".5"/>
+                <rect x="20" y="30" width="360" height="40" rx="16" fill="#1e2156"/>
+                <circle cx="46" cy="50" r="6" fill="#f87171"/><circle cx="66" cy="50" r="6" fill="#fbbf24"/><circle cx="86" cy="50" r="6" fill="#34d399"/>
+                <g font-family="JetBrains Mono, monospace" font-size="14">
+                  <text x="44" y="106" fill="#c4b5fd">async function <tspan fill="#93c5fd">integrar</tspan><tspan fill="#cbd5e1">(pedido) {"{"}</tspan></text>
+                  <text x="64" y="134" fill="#c4b5fd">const <tspan fill="#cbd5e1">nota = </tspan><tspan fill="#c4b5fd">await </tspan><tspan fill="#93c5fd">emitirNFe</tspan><tspan fill="#cbd5e1">(pedido);</tspan></text>
+                  <text x="64" y="162" fill="#c4b5fd">await <tspan fill="#93c5fd">erp.atualizar</tspan><tspan fill="#cbd5e1">(nota);</tspan></text>
+                  <text x="64" y="190" fill="#c4b5fd">return <tspan fill="#5eead4">'ok'</tspan><tspan fill="#cbd5e1">;</tspan></text>
+                  <text x="44" y="218" fill="#cbd5e1">{"}"}</text>
+                  <text x="44" y="262" fill="#64748b">// testes: 128 passando ✓</text>
+                </g>
+              </svg>
+            )}
+            {s.tema === 'sped' && (
+              <svg viewBox="0 0 400 340" fill="none">
+                <rect x="30" y="30" width="340" height="280" rx="16" fill="#0a2a33" stroke="#2dd4bf" stroke-opacity=".5"/>
+                <text x="56" y="70" fill="#fff" font-family="Inter, sans-serif" font-weight="700" font-size="16">EFD ICMS/IPI</text>
+                <text x="56" y="92" fill="#5eead4" font-family="JetBrains Mono, monospace" font-size="12">Validação concluída · 0 erros</text>
+                <g fill="#14b8a6">
+                  <rect x="60" y="210" width="36" height="70" rx="6" fill-opacity=".5"/>
+                  <rect x="112" y="180" width="36" height="100" rx="6" fill-opacity=".65"/>
+                  <rect x="164" y="150" width="36" height="130" rx="6" fill-opacity=".8"/>
+                  <rect x="216" y="125" width="36" height="155" rx="6"/>
+                </g>
+                <rect x="272" y="120" width="76" height="76" rx="14" fill="#06101f" stroke="#2dd4bf"/>
+                <text x="310" y="152" text-anchor="middle" fill="#2dd4bf" font-family="Inter, sans-serif" font-weight="800" font-size="16">IBS</text>
+                <text x="310" y="176" text-anchor="middle" fill="#93c5fd" font-family="Inter, sans-serif" font-weight="800" font-size="16">CBS</text>
+              </svg>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="slider-ui">
+    <div class="container">
+      <div class="dots" role="tablist" aria-label="Escolher slide">
+        {slides.map((s, i) => (
+          <button class={`dot${i === 0 ? ' active' : ''}`} role="tab" aria-selected={i === 0 ? 'true' : 'false'} aria-label={`Ir para o slide ${i + 1}: ${s.tag}`}></button>
+        ))}
+      </div>
+      <span class="slide-count"><span class="cur">01</span> / {String(slides.length).padStart(2, '0')}</span>
+      <div class="arrows">
+        <button class="arrow prev" aria-label="Slide anterior"><Icon name="arrow" size={20} /></button>
+        <button class="arrow next" aria-label="Próximo slide"><Icon name="arrow" size={20} /></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    var hero = document.querySelector('.hero');
+    if (!hero) return;
+    var slides = hero.querySelectorAll('.slide');
+    var dots = hero.querySelectorAll('.dot');
+    var cur = hero.querySelector('.cur');
+    var ms = +hero.dataset.ms || 6000;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var i = 0, timer = null, paused = false;
+
+    function go(n) {
+      slides[i].classList.remove('active');
+      slides[i].setAttribute('aria-hidden', 'true');
+      slides[i].querySelectorAll('a').forEach(function (a) { a.tabIndex = -1; });
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add('active');
+      slides[i].setAttribute('aria-hidden', 'false');
+      slides[i].querySelectorAll('a').forEach(function (a) { a.removeAttribute('tabindex'); });
+      dots.forEach(function (d, k) {
+        d.classList.remove('active');
+        d.classList.toggle('done', k < i);
+        d.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      });
+      void dots[i].offsetWidth; // reinicia a barra de progresso
+      dots[i].classList.add('active');
+      cur.textContent = String(i + 1).padStart(2, '0');
+      schedule();
+    }
+    function schedule() {
+      clearTimeout(timer);
+      if (!paused && !reduce) timer = setTimeout(function () { go(i + 1); }, ms);
+    }
+    hero.querySelector('.next').addEventListener('click', function () { go(i + 1); });
+    hero.querySelector('.prev').addEventListener('click', function () { go(i - 1); });
+    dots.forEach(function (d, k) { d.addEventListener('click', function () { go(k); }); });
+
+    // pausa ao passar o mouse ou focar com teclado; retoma ao sair
+    function pause() { paused = true; hero.classList.add('paused'); clearTimeout(timer); }
+    function resume() { paused = false; hero.classList.remove('paused'); go(i); }
+    hero.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') pause(); });
+    hero.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') resume(); });
+    hero.addEventListener('focusin', function () { try { if (hero.querySelector(':focus-visible')) pause(); } catch (e) {} });
+    hero.addEventListener('focusout', function (e) { if (paused && !hero.contains(e.relatedTarget) && !hero.matches(':hover')) resume(); });
+    document.addEventListener('visibilitychange', function () { document.hidden ? clearTimeout(timer) : schedule(); });
+
+    // swipe no celular
+    var x0 = null;
+    hero.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    hero.addEventListener('touchend', function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 50) go(dx < 0 ? i + 1 : i - 1);
+      x0 = null;
+    });
+    hero.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') go(i + 1);
+      if (e.key === 'ArrowLeft') go(i - 1);
+    });
+
+    if (reduce) hero.classList.add('paused');
+    schedule();
+  })();
+</script>

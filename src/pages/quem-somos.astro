@@ -1,0 +1,87 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { time, empresa } from '../data/site';
+---
+<Base title="Quem somos" description={`Conheça a ${empresa.nome}: um time de desenvolvedores especializado em integração de sistemas fiscais.`}>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Quem somos</span>
+      <h1>Um time enxuto, técnico e próximo de cada cliente</h1>
+      <p>A {empresa.nome} nasceu da experiência prática com integrações fiscais e do incômodo de ver empresas presas a sistemas que não conversam.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div class="reveal">
+        <span class="eyebrow">Nossa história</span>
+        <h2>Engenharia de software com sotaque fiscal</h2>
+        <p class="lead">Somos desenvolvedores que vivem o dia a dia da SEFAZ, dos leiautes e das regras tributárias. Isso nos permite resolver em semanas o que costuma levar meses.</p>
+        <p class="muted">Hoje somos dois desenvolvedores sócios, atendendo diretamente cada projeto, sem intermediários. Estamos crescendo e montando um time que mantenha esse mesmo cuidado técnico.</p>
+      </div>
+      <div class="code-card reveal" aria-label="Exemplo ilustrativo de código">
+        <div><span class="c">// nosso jeito de trabalhar</span></div>
+        <div><span class="k">const</span> {empresa.nome.toLowerCase()} = {'{'}</div>
+        <div>&nbsp;&nbsp;foco: <span class="s">'integração e sistemas fiscais'</span>,</div>
+        <div>&nbsp;&nbsp;time: <span class="s">'2 devs, crescendo'</span>,</div>
+        <div>&nbsp;&nbsp;entrega: <span class="s">'curta, testada e documentada'</span>,</div>
+        <div>&nbsp;&nbsp;suporte: <span class="s">'direto com quem fez'</span>,</div>
+        <div>{'}'};</div>
+        <div>&nbsp;</div>
+        <div><span class="f">contratar</span>({empresa.nome.toLowerCase()}); <span class="c">// ✓</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Time</span>
+        <h2>Quem está por trás do código</h2>
+      </div>
+      <div class="grid grid-3">
+        {time.map((p) => (
+          <article class="card team-card reveal">
+            <div class="avatar">{p.iniciais}</div>
+            <h3>{p.nome}</h3>
+            <p class="cargo">{p.cargo}</p>
+            <p>{p.bio}</p>
+          </article>
+        ))}
+        <article class="card team-card hiring reveal">
+          <div class="avatar"><Icon name="users" size={36} /></div>
+          <h3>Sua vaga aqui</h3>
+          <p>Estamos crescendo. Se você curte integração e regra fiscal, fale com a gente.</p>
+          <p style="margin-top:16px"><a class="btn btn-sm btn-dark" href="contato.html">Quero fazer parte</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">O que nos guia</span>
+        <h2>Missão, visão e valores</h2>
+      </div>
+      <div class="grid grid-3 values">
+        <div class="card reveal">
+          <div class="icon-badge"><Icon name="target" /></div>
+          <h3>Missão</h3>
+          <p>Conectar sistemas e simplificar a rotina fiscal das empresas com software confiável.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon-badge"><Icon name="rocket" /></div>
+          <h3>Visão</h3>
+          <p>Ser referência em integração fiscal para empresas e software houses no Brasil.</p>
+        </div>
+        <div class="card reveal">
+          <div class="icon-badge"><Icon name="shield" /></div>
+          <h3>Valores</h3>
+          <p>Transparência, qualidade técnica, responsabilidade com dados e proximidade com o cliente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

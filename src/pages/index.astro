@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroSlider from '../components/HeroSlider.astro';
+import Icon from '../components/Icon.astro';
+import { servicos, projetos, empresa } from '../data/site';
+const techs = ['NF-e', 'NFC-e', 'NFS-e', 'CT-e', 'MDF-e', 'SPED EFD', 'Reforma Tributária', 'IBS / CBS', 'APIs REST', 'Webhooks', 'Mensageria', 'ERPs', 'Marketplaces', 'Cloud'];
+---
+<Base>
+  <HeroSlider />
+
+  <div class="tech-strip" aria-hidden="true">
+    <div class="marquee">
+      {[...techs, ...techs].map((t) => <span>{t}</span>)}
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">O que fazemos</span>
+        <h2>Tecnologia para quem não pode errar na nota</h2>
+        <p>Unimos conhecimento fiscal e engenharia de software para que seus sistemas emitam, integrem e reportem com segurança.</p>
+      </div>
+      <div class="grid grid-4">
+        {servicos.map((s) => (
+          <article class="card reveal">
+            <div class="icon-badge"><Icon name={s.icone} /></div>
+            <h3>{s.titulo}</h3>
+            <p>{s.texto}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-soft">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Como trabalhamos</span>
+        <h2>Do diagnóstico à operação estável</h2>
+      </div>
+      <div class="grid grid-4 steps">
+        <div class="step reveal"><h3>Diagnóstico</h3><p>Entendemos seus sistemas, regras fiscais e gargalos atuais.</p></div>
+        <div class="step reveal"><h3>Arquitetura</h3><p>Desenhamos a integração com foco em segurança, contingência e escala.</p></div>
+        <div class="step reveal"><h3>Desenvolvimento</h3><p>Entregas curtas, validadas em homologação antes de ir para produção.</p></div>
+        <div class="step reveal"><h3>Suporte</h3><p>Acompanhamos mudanças de leiaute e legislação para nada parar.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Projetos</span>
+        <h2>Alguns trabalhos recentes</h2>
+      </div>
+      <div class="grid grid-3">
+        {projetos.slice(0, 3).map((p) => (
+          <article class="card project reveal">
+            <span class="cat">{p.categoria}</span>
+            <h3>{p.titulo}</h3>
+            <p>{p.texto}</p>
+            <div class="tags">{p.tags.map((t) => <span class="tag">{t}</span>)}</div>
+          </article>
+        ))}
+      </div>
+      <p style="margin-top:32px"><a class="btn btn-dark" href="projetos.html">Ver todos os projetos <Icon name="arrow" size={18} /></a></p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="cta-band reveal">
+        <div>
+          <h2>Tem uma integração travando sua operação?</h2>
+          <p>Conte o cenário para a {empresa.nome}. Respondemos em até um dia útil.</p>
+        </div>
+        <a class="btn" href="contato.html">Falar com um especialista <Icon name="arrow" size={18} /></a>
+      </div>
+    </div>
+  </section>
+</Base>

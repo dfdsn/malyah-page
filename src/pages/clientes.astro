@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { clientes, depoimentos } from '../data/site';
+---
+<Base title="Clientes" description="Empresas que confiam nas nossas integrações fiscais e de sistemas.">
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Clientes</span>
+      <h1>Empresas que confiam no nosso código</h1>
+      <p>Do varejo à indústria, ajudamos negócios a emitir, integrar e reportar sem dor de cabeça.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="logo-grid">
+        {clientes.map((c) => (
+          <div class="logo-tile reveal">
+            {c.logo ? <img src={c.logo} alt={c.nome} loading="lazy" /> : (<><strong>{c.nome}</strong><span>{c.segmento}</span></>)}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {depoimentos.length > 0 && (
+    <section class="section section-soft">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Depoimentos</span>
+          <h2>O que dizem sobre a gente</h2>
+        </div>
+        <div class="grid grid-2">
+          {depoimentos.map((d) => (
+            <figure class="card quote reveal" style="margin:0">
+              <blockquote>{d.texto}</blockquote>
+              <figcaption><cite>{d.autor}<span>{d.cargo}</span></cite></figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-band reveal">
+        <div>
+          <h2>Quer entrar para essa lista?</h2>
+          <p>Vamos conversar sobre o seu cenário de integração.</p>
+        </div>
+        <a class="btn" href="contato.html">Entrar em contato <Icon name="arrow" size={18} /></a>
+      </div>
+    </div>
+  </section>
+</Base>

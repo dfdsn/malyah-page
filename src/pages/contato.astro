@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { empresa } from '../data/site';
+---
+<Base title="Contato" description={`Fale com a ${empresa.nome} sobre integração de sistemas e soluções fiscais.`}>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">Contato</span>
+      <h1>Vamos conversar sobre o seu projeto</h1>
+      <p>Conte o cenário atual e o que precisa integrar. Respondemos em até um dia útil.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact-grid">
+      <div>
+        <ul class="contact-list">
+          <li><span class="icon-badge"><Icon name="mail" /></span><div><small>E-mail</small><a href={`mailto:${empresa.email}`}>{empresa.email}</a></div></li>
+          <li><span class="icon-badge"><Icon name="chat" /></span><div><small>WhatsApp</small><a href={`https://wa.me/${empresa.whatsapp}`} target="_blank" rel="noopener">{empresa.telefone}</a></div></li>
+          <li><span class="icon-badge"><Icon name="pin" /></span><div><small>Localização</small><strong>{empresa.cidade}</strong><small>Atendimento remoto em todo o Brasil</small></div></li>
+        </ul>
+        <p class="muted">Também fazemos uma conversa rápida de diagnóstico, sem compromisso, para entender se podemos ajudar.</p>
+      </div>
+
+      <form class="form card" id="form-contato" data-endpoint={empresa.formEndpoint} data-email={empresa.email} novalidate>
+        <div class="row">
+          <div class="field"><label for="nome">Nome</label><input id="nome" name="nome" required autocomplete="name" /></div>
+          <div class="field"><label for="empresa">Empresa</label><input id="empresa" name="empresa" autocomplete="organization" /></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" required autocomplete="email" /></div>
+          <div class="field"><label for="telefone">Telefone</label><input id="telefone" name="telefone" type="tel" autocomplete="tel" /></div>
+        </div>
+        <div class="field">
+          <label for="assunto">Assunto</label>
+          <select id="assunto" name="assunto">
+            <option>Integração fiscal (NF-e, NFS-e, etc.)</option>
+            <option>Integração entre sistemas</option>
+            <option>Desenvolvimento sob medida</option>
+            <option>SPED / Reforma Tributária</option>
+            <option>Trabalhe conosco</option>
+            <option>Outro assunto</option>
+          </select>
+        </div>
+        <div class="field"><label for="mensagem">Mensagem</label><textarea id="mensagem" name="mensagem" required></textarea></div>
+        <div><button class="btn" type="submit">Enviar mensagem <Icon name="arrow" size={18} /></button></div>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var form = document.getElementById('form-contato');
+      var status = form.querySelector('.form-status');
+      function show(msg, ok) { status.textContent = msg; status.className = 'form-status ' + (ok ? 'ok' : 'err'); }
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var d = new FormData(form);
+        if (!d.get('nome') || !d.get('mensagem') || !form.email.checkValidity() || !d.get('email')) {
+          show('Preencha nome, um e-mail válido e a mensagem.', false); return;
+        }
+        var endpoint = form.dataset.endpoint;
+        if (!endpoint) {
+          var body = 'Nome: ' + d.get('nome') + '\nEmpresa: ' + d.get('empresa') + '\nE-mail: ' + d.get('email') + '\nTelefone: ' + d.get('telefone') + '\n\n' + d.get('mensagem');
+          window.location.href = 'mailto:' + form.dataset.email + '?subject=' + encodeURIComponent('[Site] ' + d.get('assunto')) + '&body=' + encodeURIComponent(body);
+          show('Abrimos seu aplicativo de e-mail com a mensagem pronta.', true); return;
+        }
+        var btn = form.querySelector('button'); btn.disabled = true;
+        fetch(endpoint, { method: 'POST', body: d, headers: { Accept: 'application/json' } })
+          .then(function (r) { if (!r.ok) throw 0; form.reset(); show('Mensagem enviada! Retornaremos em breve.', true); })
+          .catch(function () { show('Não foi possível enviar agora. Tente pelo e-mail ou WhatsApp.', false); })
+          .finally(function () { btn.disabled = false; });
+      });
+    })();
+  </script>
+</Base>

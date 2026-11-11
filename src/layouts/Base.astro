@@ -1,0 +1,115 @@
+---
+import { empresa } from '../data/site';
+import '../styles/global.css';
+interface Props { title?: string; description?: string; }
+const { title, description = `${empresa.nome}: ${empresa.slogan}.` } = Astro.props;
+const fullTitle = title ? `${title} | ${empresa.nome}` : `${empresa.nome} | ${empresa.slogan}`;
+const current = Astro.url.pathname.split('/').pop()?.replace('.html', '') || 'index';
+const nav = [
+  { href: 'index.html', label: 'Início', key: 'index' },
+  { href: 'quem-somos.html', label: 'Quem somos', key: 'quem-somos' },
+  { href: 'projetos.html', label: 'Projetos', key: 'projetos' },
+  { href: 'clientes.html', label: 'Clientes', key: 'clientes' },
+];
+const favicon = "data:image/svg+xml," + encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='#0b1b33'/><path d='M8 23V9l8 8 8-8v14' fill='none' stroke='#2dd4bf' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>`);
+const ano = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <link rel="icon" href={favicon} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label={`${empresa.nome}, página inicial`}>
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="34" height="34"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M8 23V9l8 8 8-8v14" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="brand-name">{empresa.nome}</span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="menu" class="nav">
+        {nav.map((n) => (
+          <a href={n.href} aria-current={current === n.key ? 'page' : undefined}>{n.label}</a>
+        ))}
+        <a class="btn btn-sm" href="contato.html" aria-current={current === 'contato' ? 'page' : undefined}>Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" width="30" height="30"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M8 23V9l8 8 8-8v14" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="brand-name">{empresa.nome}</span>
+        </a>
+        <p class="muted">{empresa.slogan}.</p>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <ul>
+          {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li><a href={`mailto:${empresa.email}`}>{empresa.email}</a></li>
+          <li><a href={`https://wa.me/${empresa.whatsapp}`} target="_blank" rel="noopener">{empresa.telefone}</a></li>
+          <li>{empresa.cidade}</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Redes</h4>
+        <ul>
+          <li><a href={empresa.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href={empresa.github} target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© {ano} {empresa.nome}. Todos os direitos reservados.</span>
+    </div>
+  </footer>
+
+  <a class="whats-float" href={`https://wa.me/${empresa.whatsapp}`} target="_blank" rel="noopener" aria-label="Conversar no WhatsApp">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3z"/></svg>
+  </a>
+
+  <script is:inline>
+    (function () {
+      var btn = document.querySelector('.nav-toggle');
+      var menu = document.getElementById('menu');
+      btn.addEventListener('click', function () {
+        var open = menu.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open);
+        btn.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+      });
+      var io = 'IntersectionObserver' in window && new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(function (el) { io ? io.observe(el) : el.classList.add('in'); });
+    })();
+  </script>
+</body>
+</html>
